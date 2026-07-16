@@ -6,10 +6,10 @@
 @section('content')
 
 {{-- Page Header --}}
-<section class="bg-gradient-to-br from-blue-700 to-blue-900 text-white py-16 px-4">
+<section class="bg-gradient-to-br from-brand-navy to-brand-navy-dark text-white py-16 px-4">
     <div class="max-w-5xl mx-auto text-center">
         <h1 class="text-4xl font-bold mb-4">Layanan Kami</h1>
-        <p class="text-blue-100 text-lg max-w-2xl mx-auto">Lima pilar layanan teknologi bersertifikat yang siap mendukung kebutuhan digital bisnis Anda.</p>
+        <p class="text-brand-teal-light/90 text-lg max-w-2xl mx-auto">Lima pilar layanan teknologi bersertifikat yang siap mendukung kebutuhan digital bisnis Anda.</p>
     </div>
 </section>
 
@@ -93,27 +93,27 @@
     @foreach($services as $i => $service)
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center {{ $i % 2 === 1 ? 'lg:flex-row-reverse' : '' }}">
         <div class="{{ $i % 2 === 1 ? 'lg:order-2' : '' }}">
-            <span class="inline-block text-xs font-mono bg-blue-50 text-blue-600 border border-blue-200 px-2 py-1 rounded mb-3">KBLI {{ $service['kbli'] }}</span>
+            <span class="inline-block text-xs font-mono bg-brand-teal-light text-brand-teal border border-brand-teal/20 px-2 py-1 rounded mb-3">KBLI {{ $service['kbli'] }}</span>
             <h2 class="text-2xl font-bold text-gray-900 mb-1">{{ $service['title'] }}</h2>
             <p class="text-sm text-gray-500 mb-4">{{ $service['subtitle'] }}</p>
             <p class="text-gray-700 leading-relaxed mb-6">{{ $service['description'] }}</p>
             <ul class="space-y-2 mb-8">
                 @foreach($service['features'] as $feature)
                 <li class="flex items-center gap-3 text-gray-700">
-                    <svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-brand-teal shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
                     </svg>
                     {{ $feature }}
                 </li>
                 @endforeach
             </ul>
-            <a href="{{ route('contact') }}" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-blue-700 transition">
+            <a href="{{ route('contact') }}" class="inline-block bg-brand-teal text-white font-semibold px-6 py-3 rounded-xl hover:bg-brand-teal-dark transition shadow-md shadow-brand-teal/10">
                 Konsultasi Gratis
             </a>
         </div>
-        <div class="{{ $i % 2 === 1 ? 'lg:order-1' : '' }} bg-blue-50 rounded-2xl p-12 flex items-center justify-center">
-            <div class="w-24 h-24 bg-blue-100 rounded-2xl flex items-center justify-center">
-                <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <div class="{{ $i % 2 === 1 ? 'lg:order-1' : '' }} bg-brand-teal-light/35 border border-brand-teal/5 rounded-2xl p-12 flex items-center justify-center">
+            <div class="w-24 h-24 bg-brand-teal-light rounded-2xl flex items-center justify-center border border-brand-teal/10">
+                <svg class="w-12 h-12 text-brand-teal" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="{{ $service['icon'] }}"/>
                 </svg>
             </div>
@@ -131,7 +131,7 @@
     <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Tidak menemukan layanan yang sesuai?</h2>
         <p class="text-gray-600 mb-6">Hubungi kami untuk diskusi kebutuhan khusus Anda. Tim kami siap membantu menemukan solusi yang tepat.</p>
-        <a href="{{ route('contact') }}" class="inline-block bg-blue-600 text-white font-semibold px-8 py-3 rounded-xl hover:bg-blue-700 transition">
+        <a href="{{ route('contact') }}" class="inline-block bg-brand-teal text-white font-semibold px-8 py-3 rounded-xl hover:bg-brand-teal-dark transition shadow-md shadow-brand-teal/10">
             Hubungi Kami Sekarang
         </a>
     </div>

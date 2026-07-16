@@ -6,6 +6,16 @@
     <meta name="description" content="@yield('meta_description', 'Nano Project Dev Indonesia — Perseroan Perorangan di bidang teknologi informasi, ISP, IoT, e-commerce, dan pengembangan software. Lahemo, Gido, Kabupaten Nias, Sumatera Utara.')">
     <title>@yield('title', 'Nano Project Dev Indonesia')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    {{-- Favicons --}}
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/icon/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/icon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('assets/icon/favicon-48x48.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/icon/favicon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/icon/favicon-512x512.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/icon/favicon-180x180.png') }}">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-white text-gray-800 antialiased">
@@ -15,18 +25,16 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 {{-- Logo --}}
-                <a href="{{ route('home') }}" class="flex items-center gap-2 font-bold text-blue-700 text-lg">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                    NPDI
+                <a href="{{ route('home') }}" class="flex items-center gap-2 font-bold text-brand-navy text-lg">
+                    <img src="{{ asset('assets/logo/logo.png') }}" alt="NPDI Logo" class="h-8 w-auto">
+                    <span>NPDI</span>
                 </a>
                 {{-- Desktop Menu --}}
                 <div class="hidden md:flex items-center gap-6 text-sm font-medium">
-                    <a href="{{ route('home') }}" class="hover:text-blue-600 transition {{ request()->routeIs('home') ? 'text-blue-600' : 'text-gray-600' }}">Beranda</a>
-                    <a href="{{ route('about') }}" class="hover:text-blue-600 transition {{ request()->routeIs('about') ? 'text-blue-600' : 'text-gray-600' }}">Tentang Kami</a>
-                    <a href="{{ route('services') }}" class="hover:text-blue-600 transition {{ request()->routeIs('services') ? 'text-blue-600' : 'text-gray-600' }}">Layanan</a>
-                    <a href="{{ route('contact') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Hubungi Kami</a>
+                    <a href="{{ route('home') }}" class="hover:text-brand-teal transition {{ request()->routeIs('home') ? 'text-brand-teal' : 'text-gray-600' }}">Beranda</a>
+                    <a href="{{ route('about') }}" class="hover:text-brand-teal transition {{ request()->routeIs('about') ? 'text-brand-teal' : 'text-gray-600' }}">Tentang Kami</a>
+                    <a href="{{ route('services') }}" class="hover:text-brand-teal transition {{ request()->routeIs('services') ? 'text-brand-teal' : 'text-gray-600' }}">Layanan</a>
+                    <a href="{{ route('contact') }}" class="bg-brand-teal text-white px-4 py-2 rounded-lg hover:bg-brand-teal-dark transition">Hubungi Kami</a>
                 </div>
                 {{-- Hamburger --}}
                 <button @click="open = !open" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition">
@@ -42,10 +50,10 @@
         {{-- Mobile Menu --}}
         <div x-show="open" x-transition class="md:hidden border-t border-gray-100 bg-white">
             <div class="px-4 py-3 flex flex-col gap-3 text-sm font-medium">
-                <a href="{{ route('home') }}" class="text-gray-700 hover:text-blue-600" @click="open=false">Beranda</a>
-                <a href="{{ route('about') }}" class="text-gray-700 hover:text-blue-600" @click="open=false">Tentang Kami</a>
-                <a href="{{ route('services') }}" class="text-gray-700 hover:text-blue-600" @click="open=false">Layanan</a>
-                <a href="{{ route('contact') }}" class="text-blue-600 font-semibold" @click="open=false">Hubungi Kami</a>
+                <a href="{{ route('home') }}" class="text-gray-700 hover:text-brand-teal" @click="open=false">Beranda</a>
+                <a href="{{ route('about') }}" class="text-gray-700 hover:text-brand-teal" @click="open=false">Tentang Kami</a>
+                <a href="{{ route('services') }}" class="text-gray-700 hover:text-brand-teal" @click="open=false">Layanan</a>
+                <a href="{{ route('contact') }}" class="text-brand-teal font-semibold" @click="open=false">Hubungi Kami</a>
             </div>
         </div>
     </nav>
@@ -55,8 +63,20 @@
         @yield('content')
     </main>
 
+    {{-- Floating WhatsApp Button --}}
+    <a href="https://wa.me/6282274839576?text=Halo%20NPDI%2C%20saya%20ingin%20info%20lebih%20lanjut%20tentang%20layanan%20di%20website%20Anda."
+       target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 group"
+       title="Chat WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.532 5.849L.057 23.486a.5.5 0 0 0 .612.612l5.637-1.475A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.528-5.208-1.442l-.374-.22-3.881 1.017 1.017-3.881-.22-.374A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+        <span class="text-sm font-semibold whitespace-nowrap">Chat WhatsApp</span>
+    </a>
+
     {{-- Footer --}}
-    <footer class="bg-gray-900 text-gray-300 mt-20">
+    <footer class="bg-brand-navy text-gray-300 mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
@@ -79,13 +99,13 @@
                         <li>Lahemo, Gido, Kab. Nias</li>
                         <li>Sumatera Utara, Indonesia</li>
                         <li class="pt-1">
-                            <a href="{{ route('contact') }}" class="text-blue-400 hover:text-blue-300 transition">Hubungi Kami</a>
+                            <a href="{{ route('contact') }}" class="text-brand-teal hover:text-brand-teal/80 transition">Hubungi Kami</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-sm text-gray-500">
-                &copy; {{ date('Y') }} Nano Project Dev Indonesia. Didirikan oleh Seriusman Waruwu. Hak cipta dilindungi undang-undang.
+            <div class="border-t border-brand-navy-dark/50 mt-8 pt-6 text-center text-sm text-gray-500">
+                &copy; {{ date('Y') }} Nano Project Dev Indonesia. Didirikan oleh Seriusman Waruwu, S.Kom. Hak cipta dilindungi undang-undang.
             </div>
         </div>
     </footer>
