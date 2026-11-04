@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(fn (Request $request) =>
             $request->is('admin/*') ? route('admin.login') : route('home')
         );
+        $middleware->validateCsrfTokens(except: [
+            'payment/webhook/xendit',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

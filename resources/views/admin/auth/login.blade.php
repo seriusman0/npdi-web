@@ -74,7 +74,7 @@
                                 id="remember"
                                 {{ old('remember') ? 'checked' : '' }}
                             >
-                            <label class="form-check-label text-gray-600" for="remember">Ingat saya</label>
+                            <label class="form-check-label text-gray-700" for="remember">Ingat saya</label>
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-3 w-100">

@@ -1,0 +1,11 @@
+appId: chromium
+---
+- openLink: https://seriusman.shop
+- assertVisible: "Nano Project Dev Indonesia"
+- assertVisible: "Solusi Teknologi"
+- assertVisible: "NanoHub"
+- assertVisible: "Produk Digital"
+- assertVisible: "Rp 149.000"
+- tapOn: "Lihat Paket →"
+- assertVisible: "Platform WhatsApp Automation"
+- assertVisible: "Pilih Paket yang Tepat"

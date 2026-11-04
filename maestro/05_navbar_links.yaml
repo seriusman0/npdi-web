@@ -1,0 +1,14 @@
+appId: chromium
+---
+- openLink: https://seriusman.shop
+- assertVisible: "Produk"
+- tapOn: "Produk"
+- assertVisible: "Produk Digital NPDI"
+- tapOn: "Beranda"
+- assertVisible: "Solusi Teknologi"
+- tapOn: "Tentang Kami"
+- assertVisible: "Tentang"
+- tapOn: "Layanan"
+- assertVisible: "Layanan"
+- tapOn: "Hubungi Kami"
+- assertVisible: "Hubungi"

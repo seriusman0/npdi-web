@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'xendit' => [
+        'secret_key' => env('XENDIT_SECRET_KEY'),
+        'webhook_token' => env('XENDIT_WEBHOOK_TOKEN'),
+    ],
+
+    'nanohub' => [
+        'api_url' => env('NANOHUB_API_URL', 'https://nanohub.nanoprojectdevindonesia.com/api'),
+        'internal_key' => env('NANOHUB_INTERNAL_KEY'),
+    ],
+
 ];

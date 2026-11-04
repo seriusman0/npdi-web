@@ -1,0 +1,10 @@
+appId: chromium
+---
+- openLink: https://seriusman.shop/produk
+- assertVisible: "Produk Digital NPDI"
+- assertVisible: "NanoHub"
+- assertVisible: "SaaS · WhatsApp Automation"
+- assertVisible: "Paling Populer"
+- tapOn: "NanoHub"
+- assertVisible: "Platform WhatsApp Automation untuk Bisnis Anda"
+- assertVisible: "Fitur Lengkap"

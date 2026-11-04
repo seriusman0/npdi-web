@@ -1,0 +1,15 @@
+appId: chromium
+---
+- openLink: https://seriusman.shop/checkout/nanohub/growth
+- assertVisible: "Detail Pembeli"
+- assertVisible: "Paket Growth"
+- assertVisible: "Rp 349.000"
+- assertVisible: "5 WA Device"
+- assertVisible: "25.000 Broadcast/bulan"
+- tapOn:
+    id: "name"
+- inputText: "Test User NPDI"
+- tapOn:
+    id: "email"
+- inputText: "test@npdi.dev"
+- assertVisible: "Lanjutkan ke Pembayaran"

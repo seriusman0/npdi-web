@@ -110,61 +110,6 @@
     </div>
 </section>
 
-{{-- Products Showcase --}}
-<section class="py-20 px-4">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-14">
-            <span class="inline-block bg-[#E3F6F7] text-[#006b6e] text-xs font-display font-semibold px-3 py-1 rounded-full mb-3 uppercase tracking-widest">Produk Digital</span>
-            <h2 class="font-display font-bold text-3xl sm:text-4xl text-[#071638] tracking-tight mb-3">SaaS Buatan NPDI</h2>
-            <p class="text-[#6B7280] max-w-xl mx-auto text-sm leading-relaxed">
-                Produk digital siap pakai yang kami bangun sendiri — beli langsung, tanpa instalasi rumit.
-            </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {{-- NanoHub Card --}}
-            <a href="{{ route('products.show', 'nanohub') }}"
-               class="group card-soft overflow-hidden flex flex-col">
-                <div class="bg-gradient-to-br from-[#006b6e] to-[#00A8AD] p-8 text-white">
-                    <span class="text-xs font-display font-semibold bg-white/15 border border-white/20 px-2.5 py-1 rounded-full">SaaS · WhatsApp Automation</span>
-                    <h3 class="font-display font-extrabold text-2xl mt-4 mb-1 tracking-tight">NanoHub</h3>
-                    <p class="text-white/70 text-sm font-serif italic leading-relaxed">Platform multi-WA: broadcast, auto-reply, inbox CRM dalam satu dashboard.</p>
-                </div>
-                <div class="p-6 flex-1 flex flex-col bg-white">
-                    <ul class="space-y-2 mb-6 flex-1 text-sm text-[#6B7280]">
-                        @foreach(['Connect banyak WA via QR scan', 'Broadcast ke ribuan kontak otomatis', 'Auto-reply berbasis keyword', 'Inbox CRM terpusat'] as $feat)
-                        <li class="flex items-center gap-2.5">
-                            <svg class="w-4 h-4 text-[#00A8AD] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            {{ $feat }}
-                        </li>
-                        @endforeach
-                    </ul>
-                    <div class="flex items-center justify-between border-t border-black/5 pt-4">
-                        <div>
-                            <p class="text-[10px] text-[#9CA3AF] uppercase tracking-wide">Mulai dari</p>
-                            <p class="font-display font-bold text-xl text-[#1A1D2E]">Rp 149.000<span class="text-sm font-normal text-[#6B7280]">/bln</span></p>
-                        </div>
-                        <span class="text-sm font-display font-semibold text-[#006b6e] group-hover:underline underline-offset-2">Lihat Paket →</span>
-                    </div>
-                </div>
-            </a>
-
-            {{-- Coming Soon --}}
-            <div class="card-soft p-10 flex flex-col items-center justify-center text-center border-2 border-dashed border-black/8 bg-[#EEF1F6]">
-                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-5 shadow-card border border-black/5">
-                    <svg class="w-5 h-5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                    </svg>
-                </div>
-                <h3 class="font-display font-semibold text-[#6B7280] mb-2">Produk Baru Segera Hadir</h3>
-                <p class="text-[#9CA3AF] text-sm mb-5 leading-relaxed max-w-xs">Tim NPDI sedang membangun produk digital berikutnya untuk mendukung bisnis Anda.</p>
-                <a href="{{ route('products.index') }}" class="text-[#006b6e] text-sm font-display font-semibold hover:underline underline-offset-2">Lihat Semua Produk →</a>
-            </div>
-        </div>
-    </div>
-</section>
-
 {{-- CTA Section --}}
 <section class="px-4 pb-24">
     <div class="max-w-5xl mx-auto">

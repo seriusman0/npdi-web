@@ -32,5 +32,8 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="XENDIT_WEBHOOK_TOKEN" value="test-webhook-token"/>
+        <env name="NANOHUB_API_URL" value="https://nanohub.nanoprojectdevindonesia.com/api"/>
+        <env name="NANOHUB_INTERNAL_KEY" value="test-internal-key"/>
     </php>
 </phpunit>
