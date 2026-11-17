@@ -1,205 +1,228 @@
 @extends('layouts.app')
 
-@section('title', 'Nano Project Dev Indonesia — Solusi Teknologi untuk Bisnis Anda')
-@section('meta_description', 'Nano Project Dev Indonesia menyediakan layanan custom software, ISP, IoT, e-commerce, dan network access point. Berbasis di Nias, Sumatera Utara.')
+@section('title', 'Nano Project Dev Indonesia — Pengembangan perangkat lunak & sistem bisnis')
+@section('meta_description', 'Studio pengembangan perangkat lunak di Nias, Sumatera Utara. Kami membangun dan merawat aplikasi web, platform belajar, e-commerce, otomasi, dan infrastruktur jaringan untuk perusahaan dan lembaga.')
 
 @section('content')
 
-{{-- Hero Section --}}
-<section class="relative overflow-hidden bg-gradient-to-br from-[#F7F8FA] via-[#EEF1F6] to-[#E3F6F7] py-28 px-4">
-    {{-- Subtle decorative blobs --}}
-    <div class="absolute -top-32 -right-32 w-96 h-96 bg-[#00A8AD]/8 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-20 -left-20 w-72 h-72 bg-[#071638]/5 rounded-full blur-3xl pointer-events-none"></div>
+{{-- ── Hero ─────────────────────────────────────────────── --}}
+<section class="border-b hairline">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8 pt-16 pb-16 lg:pt-24 lg:pb-20">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <div class="lg:col-span-7">
+                <p class="eyebrow rise">Studio pengembangan perangkat lunak · Nias, Sumatera Utara</p>
 
-    <div class="max-w-5xl mx-auto text-center relative z-10">
-        <span class="hero-badge inline-flex items-center gap-1.5 bg-white border border-[#00A8AD]/20 text-[#006b6e] text-xs font-display font-semibold px-4 py-1.5 rounded-full mb-6 shadow-sm opacity-0">
-            <span class="w-1.5 h-1.5 bg-[#00A8AD] rounded-full"></span>
-            Perseroan Perorangan Terdaftar · Kab. Nias, Sumatera Utara
-        </span>
-        <h1 class="hero-title font-display font-extrabold text-5xl sm:text-6xl lg:text-7xl text-[#071638] leading-[1.08] tracking-tight mb-5 opacity-0">
-            Solusi Teknologi<br>
-            <span class="text-[#00A8AD]">untuk Bisnis</span> Modern
-        </h1>
-        <p class="hero-subtitle font-serif italic text-[#6B7280] text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed opacity-0">
-            Layanan pemrograman, jaringan internet, e-commerce, dan IoT yang profesional, terpercaya, dan terjangkau.
-        </p>
-        <div class="hero-btns flex flex-col sm:flex-row gap-3 justify-center opacity-0">
-            <a href="{{ route('contact') }}"
-               class="font-display font-bold bg-[#071638] text-white px-8 py-3.5 rounded-xl hover:bg-[#040d21] transition-all duration-200 text-sm shadow-md shadow-[#071638]/15">
-                Hubungi Kami
-            </a>
-            <a href="{{ route('services') }}"
-               class="font-display font-semibold bg-white border border-black/10 text-[#1A1D2E] px-8 py-3.5 rounded-xl hover:border-[#00A8AD]/30 hover:text-[#006b6e] transition-all duration-200 text-sm shadow-sm">
-                Lihat Layanan
-            </a>
+                <h1 class="display-xl mt-5 rise rise-2">
+                    Kami membangun sistem yang dipakai bisnis setiap hari.
+                </h1>
+
+                <p class="mt-6 max-w-xl text-[15.5px] leading-relaxed text-muted rise rise-3">
+                    Nano Project Dev Indonesia merancang, membangun, dan merawat aplikasi web,
+                    platform pembelajaran, e-commerce, serta infrastruktur jaringan. Pekerjaan
+                    kami berjalan di produksi — bukan sekadar konsep di presentasi.
+                </p>
+
+                <div class="mt-8 flex flex-wrap items-center gap-3 rise rise-4">
+                    <a href="{{ route('contact') }}" class="btn btn-primary">
+                        Diskusikan proyek
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/>
+                        </svg>
+                    </a>
+                    <a href="{{ route('projects') }}" class="btn btn-ghost">Lihat proyek kami</a>
+                </div>
+
+                <p class="mt-6 text-[12.5px] text-muted">
+                    Konsultasi awal tanpa biaya · Dikerjakan langsung oleh engineer, bukan perantara.
+                </p>
+            </div>
+
+            {{-- Fact sheet --}}
+            <div class="lg:col-span-5 lg:pl-10 lg:border-l lg:hairline">
+                <div class="panel divide-y hairline">
+                    @foreach ([
+                        ['Badan usaha', 'Perseroan Perorangan, terdaftar & aktif'],
+                        ['Bidang usaha', 'KBLI 62199 · 61104 · 61107 · 62191 · 62204'],
+                        ['Fokus teknis', 'Laravel, Node.js, Vue/React, MySQL, Redis'],
+                        ['Cara kerja', 'Remote untuk seluruh Indonesia, on-site untuk Nias & sekitarnya'],
+                        ['Respons awal', 'Maksimal 1 hari kerja'],
+                    ] as $fact)
+                        <div class="px-5 py-4">
+                            <dt class="eyebrow !text-[10px]">{{ $fact[0] }}</dt>
+                            <dd class="mt-1.5 text-[13.5px] leading-snug text-ink-soft">{{ $fact[1] }}</dd>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
-{{-- Company Snapshot --}}
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="text-center mb-14">
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-[#071638] mb-4 tracking-tight">
-            Tentang Nano Project Dev Indonesia
-        </h2>
-        <p class="font-serif italic text-[#6B7280] max-w-2xl mx-auto text-lg leading-relaxed">
-            Perusahaan teknologi yang didirikan oleh <strong class="not-italic font-semibold text-[#1A1D2E]">Seriusman Waruwu, S.Kom</strong>,
-            berbasis di Lahemo, Gido, Kabupaten Nias, Sumatera Utara.
-        </p>
-        <a href="{{ route('about') }}" class="inline-block mt-5 text-[#006b6e] font-display font-semibold text-sm hover:underline underline-offset-4">
-            Pelajari Lebih Lanjut →
+{{-- ── Proyek ───────────────────────────────────────────── --}}
+<section class="mx-auto max-w-[1180px] px-5 sm:px-8 py-16 lg:py-20">
+    <div class="flex flex-wrap items-end justify-between gap-6 mb-10">
+        <div class="max-w-2xl">
+            <p class="eyebrow">01 — Proyek</p>
+            <h2 class="display-lg mt-3">Sistem yang sudah berjalan di produksi</h2>
+            <p class="mt-3 text-[15px] text-muted">
+                Produk dan sistem internal perusahaan yang kami bangun, deployed, dan rawat sendiri —
+                dari pengembangan sampai pemeliharaan harian.
+            </p>
+        </div>
+        <a href="{{ route('projects') }}" class="link-underline text-[13.5px] font-medium text-ink">
+            Semua proyek →
         </a>
     </div>
 
-    {{-- Stats --}}
-    <div class="stats-container grid grid-cols-2 md:grid-cols-4 gap-5">
-        @foreach([
-            ['5', 'Bidang Layanan KBLI', '+'],
-            ['1', 'Perseroan Terdaftar', ''],
-            ['100', 'Legalitas Terjamin', '%'],
-            ['24', 'Siap Konsultasi', '/7'],
-        ] as $stat)
-        <div class="stat-card card-soft p-6 text-center opacity-0">
-            <div class="font-display font-extrabold text-3xl text-[#071638] mb-1">
-                <span class="stat-count" data-value="{{ $stat[0] }}">0</span><span class="text-[#00A8AD]">{{ $stat[2] }}</span>
-            </div>
-            <div class="text-xs text-[#6B7280] font-medium tracking-wide">{{ $stat[1] }}</div>
-        </div>
+    <div class="grid md:grid-cols-2 gap-px bg-[rgba(10,21,38,0.12)] border hairline rounded-lg overflow-hidden">
+        @foreach ($projects as $project)
+            <article class="bg-white p-6 sm:p-7 flex flex-col">
+                <div class="flex items-start justify-between gap-4">
+                    <p class="eyebrow !text-[10px]">{{ $project['category'] }}</p>
+                    <span class="tag">Produksi</span>
+                </div>
+
+                <h3 class="mt-3 text-[19px] font-semibold tracking-tight text-ink">{{ $project['name'] }}</h3>
+                <p class="mt-2 text-[14px] leading-relaxed text-muted">{{ $project['summary'] }}</p>
+
+                <ul class="mt-4 space-y-1.5 text-[13px] text-ink-soft flex-1">
+                    @foreach (array_slice($project['scope'], 0, 3) as $item)
+                        <li class="flex gap-2">
+                            <span class="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-accent"></span>
+                            <span>{{ $item }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+
+                <div class="mt-5 pt-4 border-t hairline flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap gap-1.5">
+                        @foreach (array_slice($project['stack'], 0, 3) as $tech)
+                            <span class="tag">{{ $tech }}</span>
+                        @endforeach
+                    </div>
+                    <a href="{{ $project['url'] }}" target="_blank" rel="noopener noreferrer"
+                       class="text-[13px] font-medium text-accent hover:text-accent-deep transition-colors inline-flex items-center gap-1">
+                        Kunjungi situs
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
         @endforeach
     </div>
 </section>
 
-{{-- Services Grid --}}
-<section class="section-warm py-20 px-4">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="text-center mb-14">
-            <span class="inline-block text-xs font-display font-semibold uppercase tracking-widest text-[#006b6e] bg-[#E3F6F7] px-3 py-1 rounded-full mb-4">Layanan</span>
-            <h2 class="font-display font-bold text-3xl sm:text-4xl text-[#071638] tracking-tight mb-3">Lima Pilar Layanan Kami</h2>
-            <p class="text-[#6B7280] max-w-xl mx-auto text-sm leading-relaxed">
-                Kegiatan usaha bersertifikat KBLI yang kami tawarkan untuk kebutuhan teknologi bisnis Anda.
+{{-- ── Layanan ──────────────────────────────────────────── --}}
+<section class="border-y hairline bg-white">
+    <div class="mx-auto max-w-[1180px] px-5 sm:px-8 py-16 lg:py-20">
+        <div class="max-w-2xl mb-10">
+            <p class="eyebrow">02 — Layanan</p>
+            <h2 class="display-lg mt-3">Yang kami kerjakan</h2>
+            <p class="mt-3 text-[15px] text-muted">
+                Lima bidang usaha resmi kami, diterjemahkan menjadi pekerjaan yang bisa dipesan
+                dengan lingkup dan estimasi yang jelas.
             </p>
         </div>
-        <div class="services-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            @foreach([
-                ['62199', 'Custom Software Development', 'Pengembangan aplikasi dan sistem perangkat lunak sesuai kebutuhan spesifik bisnis Anda.', 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'],
-                ['61104', 'Internet Service Provider', 'Layanan akses internet yang andal dan berkecepatan tinggi untuk rumah, bisnis, dan institusi.', 'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0'],
-                ['61107', 'Network Access Point', 'Infrastruktur gerbang akses internet dan manajemen jaringan untuk konektivitas optimal.', 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01'],
-                ['62191', 'E-Commerce Development', 'Pembuatan platform perdagangan elektronik yang aman, skalabel, dan mudah dikelola.', 'M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'],
-                ['62204', 'IoT Consulting & Design', 'Konsultasi dan perancangan sistem Internet of Things untuk efisiensi operasional dan otomatisasi.', 'M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18'],
-            ] as $service)
-            <div class="service-card card-soft p-6 opacity-0">
-                <div class="w-10 h-10 bg-[#E3F6F7] rounded-xl flex items-center justify-center mb-5">
-                    <svg class="w-5 h-5 text-[#00A8AD]" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="{{ $service[3] }}"/>
-                    </svg>
+
+        @php
+            $services = [
+                ['62199', 'Pengembangan perangkat lunak', 'Aplikasi web, sistem informasi, dasbor operasional, dan API. Mulai dari pemetaan proses sampai rilis dan pemeliharaan.', 'Laravel · Vue · React · PostgreSQL/MySQL'],
+                ['61104', 'Jasa akses internet', 'Koneksi internet untuk rumah, usaha, dan institusi di wilayah Kepulauan Nias beserta dukungan teknisnya.', 'Instalasi · Monitoring · Dukungan'],
+                ['61107', 'Gerbang akses jaringan', 'Perancangan dan pengelolaan network access point: routing, segmentasi, firewall, dan optimasi bandwidth.', 'Mikrotik · VLAN · QoS · Firewall'],
+                ['62191', 'Pengembangan e-commerce', 'Toko daring dan marketplace dengan pembayaran lokal, manajemen stok, serta laporan penjualan.', 'Xendit · Midtrans · Integrasi logistik'],
+                ['62204', 'Konsultasi & rancang IoT', 'Perancangan sensor, konektivitas, dan dasbor monitoring untuk otomasi dan efisiensi operasional.', 'MQTT · Sensor · Dasbor real-time'],
+            ];
+        @endphp
+
+        <div class="border-t hairline">
+            @foreach ($services as $i => $service)
+                <div class="grid md:grid-cols-12 gap-3 md:gap-6 py-6 border-b hairline">
+                    <div class="md:col-span-1 font-mono text-[12px] text-muted pt-0.5">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-[16.5px] font-semibold tracking-tight text-ink">{{ $service[1] }}</h3>
+                        <p class="mt-1 font-mono text-[10.5px] uppercase tracking-[0.12em] text-muted">KBLI {{ $service[0] }}</p>
+                    </div>
+                    <p class="md:col-span-4 text-[14px] leading-relaxed text-muted">{{ $service[2] }}</p>
+                    <div class="md:col-span-3 md:text-right">
+                        <p class="text-[12.5px] text-ink-soft">{{ $service[3] }}</p>
+                    </div>
                 </div>
-                <span class="text-[10px] font-display font-semibold uppercase tracking-widest text-[#006b6e] bg-[#E3F6F7] px-2 py-0.5 rounded">
-                    KBLI {{ $service[0] }}
-                </span>
-                <h3 class="font-display font-bold text-base text-[#1A1D2E] mt-3 mb-2">{{ $service[1] }}</h3>
-                <p class="text-[#6B7280] text-sm leading-relaxed">{{ $service[2] }}</p>
-            </div>
             @endforeach
         </div>
-        <div class="text-center mt-10">
-            <a href="{{ route('services') }}"
-               class="font-display font-bold inline-block bg-[#071638] text-white px-8 py-3.5 rounded-xl hover:bg-[#040d21] transition-all duration-200 text-sm shadow-md shadow-[#071638]/10">
-                Lihat Detail Layanan
-            </a>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href="{{ route('services') }}" class="btn btn-primary !py-2.5 !text-[13px]">Detail layanan</a>
+            <a href="{{ route('contact') }}" class="link-underline text-[13.5px] font-medium text-ink">Minta penawaran →</a>
         </div>
     </div>
 </section>
 
-{{-- CTA Section --}}
-<section class="px-4 pb-24">
-    <div class="max-w-5xl mx-auto">
-        <div class="bg-gradient-to-br from-[#071638] to-[#040d21] rounded-3xl py-16 px-8 text-center shadow-elevated relative overflow-hidden">
-            <div class="absolute inset-0 bg-[#00A8AD]/5 rounded-3xl"></div>
-            <div class="relative z-10">
-                <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white mb-4 tracking-tight">Siap Memulai Proyek Anda?</h2>
-                <p class="font-serif italic text-white/60 mb-8 max-w-xl mx-auto text-lg leading-relaxed">
-                    Konsultasikan kebutuhan teknologi bisnis Anda bersama kami. Gratis, tanpa komitmen.
+{{-- ── Proses ───────────────────────────────────────────── --}}
+<section class="mx-auto max-w-[1180px] px-5 sm:px-8 py-16 lg:py-20">
+    <div class="max-w-2xl mb-10">
+        <p class="eyebrow">03 — Proses</p>
+        <h2 class="display-lg mt-3">Cara kami mengerjakan proyek</h2>
+        <p class="mt-3 text-[15px] text-muted">
+            Empat tahap yang sama untuk setiap proyek, dengan hasil yang bisa diperiksa di setiap akhir tahap.
+        </p>
+    </div>
+
+    <ol class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[rgba(10,21,38,0.12)] border hairline rounded-lg overflow-hidden">
+        @foreach ([
+            ['01', 'Diskusi & pemetaan', 'Kami pelajari proses bisnis Anda, tentukan ruang lingkup, prioritas, dan batas pekerjaan secara tertulis.'],
+            ['02', 'Rancangan & estimasi', 'Alur layar, struktur data, dan rencana teknis disusun sebelum baris kode pertama ditulis — beserta estimasi waktu dan biaya.'],
+            ['03', 'Pengembangan & uji', 'Pengerjaan bertahap dengan demo rutin. Setiap fitur diuji sebelum masuk ke lingkungan produksi.'],
+            ['04', 'Rilis & pendampingan', 'Deploy, pelatihan pengguna, dokumentasi, dan masa pendampingan setelah sistem dipakai.'],
+        ] as [$num, $title, $desc])
+            <li class="bg-white p-6">
+                <p class="font-mono text-[11px] tracking-[0.12em] text-accent">{{ $num }}</p>
+                <h3 class="mt-3 text-[15.5px] font-semibold tracking-tight text-ink">{{ $title }}</h3>
+                <p class="mt-2 text-[13.5px] leading-relaxed text-muted">{{ $desc }}</p>
+            </li>
+        @endforeach
+    </ol>
+
+    <div class="mt-10 grid sm:grid-cols-3 gap-6">
+        @foreach ([
+            ['Kode dan aset menjadi milik Anda', 'Repositori, domain, dan server diserahkan atas nama perusahaan Anda saat proyek selesai.'],
+            ['Dokumentasi serah terima', 'Alur kerja, konfigurasi server, dan panduan operasional ditulis agar sistem tidak bergantung pada satu orang.'],
+            ['Dukungan setelah rilis', 'Pemeliharaan, pembaruan keamanan, dan perbaikan bug tetap tersedia setelah proyek dianggap selesai.'],
+        ] as $value)
+            <div class="flex gap-3">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 12l5 5L20 6"/>
+                </svg>
+                <div>
+                    <p class="text-[14px] font-semibold text-ink">{{ $value[0] }}</p>
+                    <p class="mt-1 text-[13.5px] leading-relaxed text-muted">{{ $value[1] }}</p>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</section>
+
+{{-- ── CTA ──────────────────────────────────────────────── --}}
+<section class="mx-auto max-w-[1180px] px-5 sm:px-8 pb-4">
+    <div class="rounded-xl bg-ink px-7 py-12 sm:px-12 sm:py-14">
+        <div class="grid lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-8">
+                <h2 class="text-[26px] sm:text-[32px] font-semibold tracking-[-0.03em] leading-tight text-white">
+                    Ada sistem yang perlu dibangun atau diperbaiki?
+                </h2>
+                <p class="mt-3 max-w-xl text-[14.5px] leading-relaxed text-white/60">
+                    Ceritakan kebutuhan Anda. Kami akan memberi pendapat jujur soal kelayakan,
+                    perkiraan biaya, dan waktu pengerjaan — sebelum ada komitmen.
                 </p>
-                <a href="{{ route('contact') }}"
-                   class="font-display font-bold inline-block bg-[#00A8AD] text-white px-8 py-3.5 rounded-xl hover:bg-[#008F94] transition-all duration-200 text-sm shadow-lg shadow-[#00A8AD]/25">
-                    Mulai Konsultasi Gratis
-                </a>
+            </div>
+            <div class="lg:col-span-4 flex flex-wrap gap-3 lg:justify-end">
+                <a href="{{ route('contact') }}" class="btn btn-accent">Hubungi kami</a>
+                <a href="{{ config('company.whatsapp_url') }}?text=Halo%20NPDI%2C%20saya%20ingin%20mendiskusikan%20sebuah%20proyek."
+                   target="_blank" rel="noopener noreferrer"
+                   class="btn !text-white border border-white/25 hover:bg-white/10">WhatsApp</a>
             </div>
         </div>
     </div>
 </section>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // ── Hero entrance (gentle, no floating elements) ──────────
-    anime.timeline({ easing: 'easeOutExpo' })
-        .add({ targets: '.hero-badge', opacity: [0, 1], translateY: [12, 0], duration: 600 })
-        .add({ targets: '.hero-title', opacity: [0, 1], translateY: [20, 0], duration: 700 }, '-=400')
-        .add({ targets: '.hero-subtitle', opacity: [0, 1], translateY: [12, 0], duration: 600 }, '-=500')
-        .add({ targets: '.hero-btns', opacity: [0, 1], translateY: [8, 0], duration: 500 }, '-=400');
-
-    // ── Scroll-triggered fade-in for .fade-up elements ────────
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                io.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
-
-    // ── Stat cards + count-up ────────────────────────────────
-    const statsContainer = document.querySelector('.stats-container');
-    if (statsContainer) {
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    anime({
-                        targets: '.stat-card',
-                        opacity: [0, 1],
-                        translateY: [20, 0],
-                        delay: anime.stagger(100),
-                        duration: 600,
-                        easing: 'easeOutQuad',
-                        complete: () => {
-                            anime({
-                                targets: '.stat-count',
-                                innerHTML: [0, el => el.getAttribute('data-value')],
-                                round: 1,
-                                easing: 'easeOutQuart',
-                                duration: 1200
-                            });
-                        }
-                    });
-                    statsObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15 });
-        statsObserver.observe(statsContainer);
-    }
-
-    // ── Service cards stagger ────────────────────────────────
-    const servicesGrid = document.querySelector('.services-grid');
-    if (servicesGrid) {
-        const servicesObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    anime({
-                        targets: '.service-card',
-                        opacity: [0, 1],
-                        translateY: [24, 0],
-                        delay: anime.stagger(80),
-                        easing: 'easeOutQuad',
-                        duration: 500
-                    });
-                    servicesObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        servicesObserver.observe(servicesGrid);
-    }
-});
-</script>
 
 @endsection

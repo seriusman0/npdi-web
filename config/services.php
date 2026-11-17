@@ -28,6 +28,18 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'telegram' => [
+        'token' => env('TELEGRAM_BOT_TOKEN'),
+        'chat_id' => env('TELEGRAM_CHAT_ID'),
+    ],
+
+    'openwa' => [
+        'base_url' => env('OPENWA_BASE_URL', 'http://127.0.0.1:2785/api'),
+        'api_key' => env('OPENWA_API_KEY'),
+        'session' => env('OPENWA_SESSION', 'npdi'),
+        'webhook_secret' => env('OPENWA_WEBHOOK_SECRET'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

@@ -3,139 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="@yield('meta_description', 'Nano Project Dev Indonesia — Perseroan Perorangan di bidang teknologi informasi, ISP, IoT, e-commerce, dan pengembangan software. Lahemo, Gido, Kabupaten Nias, Sumatera Utara.')">
-    <title>@yield('title', 'Nano Project Dev Indonesia')</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Preconnect Google Fonts --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    @php
+        $pageTitle = trim($__env->yieldContent('title')) ?: 'Nano Project Dev Indonesia';
+        $pageDescription = trim($__env->yieldContent('meta_description'))
+            ?: 'Nano Project Dev Indonesia — studio pengembangan perangkat lunak di Nias, Sumatera Utara. Membangun aplikasi web, platform belajar, e-commerce, dan infrastruktur jaringan untuk perusahaan dan lembaga.';
+        $canonical = url()->current();
+        $ogImage = asset('assets/icon/favicon-512x512.png');
+    @endphp
+
+    <title>{{ $pageTitle }}</title>
+    <meta name="description" content="{{ $pageDescription }}">
+    <link rel="canonical" href="{{ $canonical }}">
+    <meta name="theme-color" content="#0A1526">
+    <meta name="robots" content="index, follow">
+
+    {{-- Open Graph --}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Nano Project Dev Indonesia">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
+    <meta property="og:url" content="{{ $canonical }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+
+    {{-- Twitter --}}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ $pageTitle }}">
+    <meta name="twitter:description" content="{{ $pageDescription }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
 
     {{-- Favicons --}}
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/icon/favicon-16x16.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/icon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('assets/icon/favicon-48x48.png') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/icon/favicon-192x192.png') }}">
-    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/icon/favicon-512x512.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/icon/favicon-180x180.png') }}">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-<body class="bg-[#F7F8FA] text-[#1A1D2E] antialiased">
+    {{-- Font lokal: preload dua bobot yang paling sering dipakai --}}
+    <link rel="preload" href="{{ asset('assets/fonts/instrument-sans-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('assets/fonts/instrument-sans-600.woff2') }}" as="font" type="font/woff2" crossorigin>
 
-    {{-- Navbar --}}
-    <nav class="bg-white/80 backdrop-blur-md border-b border-black/5 sticky top-0 z-50" x-data="{ open: false }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                {{-- Logo --}}
-                <a href="{{ route('home') }}" class="flex items-center gap-2.5">
-                    <img src="{{ asset('assets/logo/logo.png') }}" alt="NPDI Logo" class="h-8 w-auto">
-                    <span class="font-display font-bold text-[#071638] text-base tracking-tight">NPDI</span>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @php
+        // Disusun sebagai array lalu di-encode, agar simbol "@" pada kunci
+        // schema.org tidak dibaca sebagai direktif Blade.
+        $organizationSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'ProfessionalService',
+            'name' => 'Nano Project Dev Indonesia',
+            'alternateName' => 'NPDI',
+            'url' => 'https://nanoprojectdevindonesia.com',
+            'logo' => $ogImage,
+            'description' => 'Studio pengembangan perangkat lunak: aplikasi web, platform pembelajaran, e-commerce, IoT, dan infrastruktur jaringan.',
+            'email' => config('company.email'),
+            'telephone' => '+'.config('company.phone_e164'),
+            'founder' => ['@type' => 'Person', 'name' => 'Seriusman Waruwu'],
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'Lahemo, Gido',
+                'addressLocality' => 'Kabupaten Nias',
+                'addressRegion' => 'Sumatera Utara',
+                'addressCountry' => 'ID',
+            ],
+            'areaServed' => ['@type' => 'Country', 'name' => 'Indonesia'],
+            'sameAs' => ['https://instagram.com/seriusman0'],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <a href="#konten" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:bg-ink focus:text-white focus:px-4 focus:py-2 focus:rounded">
+        Lompat ke konten
+    </a>
+
+    {{-- ── Header ─────────────────────────────────────── --}}
+    <header class="sticky top-0 z-50 bg-paper/90 backdrop-blur border-b hairline">
+        <div class="mx-auto max-w-[1180px] px-5 sm:px-8">
+            <div class="flex h-16 items-center justify-between gap-6">
+                <a href="{{ route('home') }}" class="flex items-center gap-2.5" aria-label="Nano Project Dev Indonesia — Beranda">
+                    <img src="{{ asset('assets/logo/logo.png') }}" alt="" class="h-8 w-8 object-contain">
+                    <span class="leading-tight">
+                        <span class="block text-[13px] font-semibold tracking-tight text-ink">Nano Project Dev</span>
+                        <span class="block text-[10px] font-mono uppercase tracking-[0.18em] text-muted">Indonesia</span>
+                    </span>
                 </a>
-                {{-- Desktop Menu --}}
-                <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                    <a href="{{ route('home') }}"
-                       class="font-display font-semibold transition-colors duration-200 {{ request()->routeIs('home') ? 'text-[#006b6e]' : 'text-[#6B7280] hover:text-[#1A1D2E]' }}">
-                        Beranda
-                    </a>
-                    <a href="{{ route('about') }}"
-                       class="font-display font-semibold transition-colors duration-200 {{ request()->routeIs('about') ? 'text-[#006b6e]' : 'text-[#6B7280] hover:text-[#1A1D2E]' }}">
-                        Tentang Kami
-                    </a>
-                    <a href="{{ route('services') }}"
-                       class="font-display font-semibold transition-colors duration-200 {{ request()->routeIs('services') ? 'text-[#006b6e]' : 'text-[#6B7280] hover:text-[#1A1D2E]' }}">
-                        Layanan
-                    </a>
-                    <a href="{{ route('products.index') }}"
-                       class="font-display font-semibold transition-colors duration-200 {{ request()->routeIs('products.*') ? 'text-[#006b6e]' : 'text-[#6B7280] hover:text-[#1A1D2E]' }}">
-                        Produk
-                    </a>
+
+                {{-- Desktop --}}
+                <nav class="hidden md:flex items-center gap-7 text-[13.5px] font-medium" aria-label="Navigasi utama">
+                    @foreach ([
+                        ['services', 'layanan', 'Layanan'],
+                        ['projects', 'proyek', 'Proyek'],
+                        ['about', 'tentang-kami', 'Tentang'],
+                    ] as [$routeName, $uri, $label])
+                        @php $active = request()->is($uri) || request()->is($uri . '/*'); @endphp
+                        <a href="{{ route($routeName) }}"
+                           class="transition-colors {{ $active ? 'text-ink' : 'text-muted hover:text-ink' }}"
+                           @if ($active) aria-current="page" @endif>{{ $label }}</a>
+                    @endforeach
                     <a href="{{ route('contact') }}"
-                       class="font-display font-bold bg-[#071638] text-white text-sm px-5 py-2 rounded-xl hover:bg-[#040d21] transition-colors duration-200 shadow-sm">
-                        Hubungi Kami
-                    </a>
-                </div>
-                {{-- Hamburger --}}
-                <button @click="open = !open" class="md:hidden p-2 rounded-lg text-[#6B7280] hover:bg-[#EEF1F6] transition">
-                    <svg x-show="!open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                       class="transition-colors {{ request()->is('hubungi-kami') ? 'text-ink' : 'text-muted hover:text-ink' }}"
+                       @if (request()->is('hubungi-kami')) aria-current="page" @endif>Kontak</a>
+                    <a href="{{ route('contact') }}" class="btn btn-primary !py-2.5 !px-4 !text-[13px]">Mulai proyek</a>
+                </nav>
+
+                {{-- Mobile toggle --}}
+                <button type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-mobile"
+                        class="md:hidden inline-flex items-center justify-center h-10 w-10 -mr-2 rounded-md text-ink hover:bg-paper-soft transition">
+                    <span class="sr-only">Buka menu</span>
+                    <svg data-icon-open class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/>
                     </svg>
-                    <svg x-show="open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    <svg data-icon-close hidden class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
                     </svg>
                 </button>
             </div>
         </div>
-        {{-- Mobile Menu --}}
-        <div x-show="open" x-transition class="md:hidden border-t border-black/5 bg-white">
-            <div class="px-5 py-4 flex flex-col gap-4 text-sm font-medium">
-                <a href="{{ route('home') }}" class="text-[#1A1D2E] hover:text-[#00A8AD] transition font-display font-semibold" @click="open=false">Beranda</a>
-                <a href="{{ route('about') }}" class="text-[#6B7280] hover:text-[#00A8AD] transition font-display font-semibold" @click="open=false">Tentang Kami</a>
-                <a href="{{ route('services') }}" class="text-[#6B7280] hover:text-[#00A8AD] transition font-display font-semibold" @click="open=false">Layanan</a>
-                <a href="{{ route('products.index') }}" class="text-[#6B7280] hover:text-[#00A8AD] transition font-display font-semibold" @click="open=false">Produk</a>
-                <a href="{{ route('contact') }}" class="text-[#006b6e] font-bold font-display" @click="open=false">Hubungi Kami</a>
-            </div>
-        </div>
-    </nav>
 
-    {{-- Main Content --}}
-    <main>
+        {{-- Mobile panel --}}
+        <div id="nav-mobile" data-nav-panel hidden class="md:hidden border-t hairline bg-paper">
+            <nav class="mx-auto max-w-[1180px] px-5 sm:px-8 py-3 flex flex-col" aria-label="Navigasi seluler">
+                @foreach ([
+                    ['home', 'Beranda'],
+                    ['services', 'Layanan'],
+                    ['projects', 'Proyek'],
+                    ['about', 'Tentang Kami'],
+                    ['contact', 'Kontak'],
+                ] as [$routeName, $label])
+                    <a href="{{ route($routeName) }}" class="py-2.5 text-[15px] text-ink-soft border-b hairline last:border-0">{{ $label }}</a>
+                @endforeach
+                <a href="{{ route('contact') }}" class="btn btn-primary mt-3 mb-1 w-full">Mulai proyek</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="konten" class="flex-1">
         @yield('content')
     </main>
 
-    {{-- Floating WhatsApp Button --}}
-    <a href="https://wa.me/6285189447121?text=Halo%20NPDI%2C%20saya%20ingin%20info%20lebih%20lanjut%20tentang%20layanan%20di%20website%20Anda."
-       target="_blank" rel="noopener noreferrer"
-       class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 group"
-       title="Chat WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.532 5.849L.057 23.486a.5.5 0 0 0 .612.612l5.637-1.475A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.528-5.208-1.442l-.374-.22-3.881 1.017 1.017-3.881-.22-.374A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-        </svg>
-        <span class="text-sm font-semibold whitespace-nowrap">Chat WhatsApp</span>
-    </a>
-
-    {{-- Footer --}}
-    <footer class="bg-[#071638] mt-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <img src="{{ asset('assets/logo/logo.png') }}" alt="NPDI" class="h-7 w-auto opacity-90">
-                        <span class="font-display font-bold text-white text-base tracking-tight">NPDI</span>
+    {{-- ── Footer ─────────────────────────────────────── --}}
+    <footer class="bg-ink text-white/70 mt-24">
+        <div class="mx-auto max-w-[1180px] px-5 sm:px-8 py-14">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+                <div class="lg:col-span-4">
+                    <div class="flex items-center gap-2.5 mb-4">
+                        <img src="{{ asset('assets/logo/logo.png') }}" alt="" class="h-8 w-8 object-contain">
+                        <span class="text-white text-[13px] font-semibold leading-tight">
+                            Nano Project Dev<br><span class="font-mono text-[10px] uppercase tracking-[0.18em] text-white/50">Indonesia</span>
+                        </span>
                     </div>
-                    <p class="text-sm text-white/50 leading-relaxed max-w-xs">
-                        Perseroan Perorangan terdaftar di bidang teknologi informasi, ISP, IoT, dan pengembangan software. Berbasis di Nias, Sumatera Utara.
+                    <p class="text-[13.5px] leading-relaxed text-white/55 max-w-xs">
+                        Studio pengembangan perangkat lunak dan infrastruktur jaringan. Berbasis di Nias, Sumatera Utara.
+                    </p>
+                    <p class="mt-4 text-[12px] text-white/35">
+                        Perseroan Perorangan · KBLI 62199, 61104, 61107, 62191, 62204
                     </p>
                 </div>
-                <div>
-                    <h4 class="font-display font-semibold text-white/80 text-xs uppercase tracking-widest mb-5">Layanan & Produk</h4>
-                    <ul class="space-y-2.5 text-sm text-white/45">
-                        <li>Custom Software Development</li>
-                        <li>Internet Service Provider</li>
-                        <li>Network Access Point</li>
-                        <li>E-Commerce Development</li>
-                        <li>IoT Consulting & Design</li>
-                        <li class="pt-1">
-                            <a href="{{ route('products.index') }}" class="text-[#00A8AD] hover:text-[#00A8AD]/80 transition font-medium">Produk Digital →</a>
-                        </li>
+
+                <div class="lg:col-span-2">
+                    <h4 class="font-mono text-[10px] uppercase tracking-[0.18em] text-white/40 mb-4">Navigasi</h4>
+                    <ul class="space-y-2.5 text-[13.5px]">
+                        <li><a href="{{ route('home') }}" class="hover:text-white transition-colors">Beranda</a></li>
+                        <li><a href="{{ route('services') }}" class="hover:text-white transition-colors">Layanan</a></li>
+                        <li><a href="{{ route('projects') }}" class="hover:text-white transition-colors">Proyek</a></li>
+                        <li><a href="{{ route('about') }}" class="hover:text-white transition-colors">Tentang</a></li>
+                        <li><a href="{{ route('contact') }}" class="hover:text-white transition-colors">Kontak</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-display font-semibold text-white/80 text-xs uppercase tracking-widest mb-5">Kontak</h4>
-                    <ul class="space-y-2.5 text-sm text-white/45">
-                        <li>Lahemo, Gido, Kab. Nias</li>
-                        <li>Sumatera Utara, Indonesia</li>
-                        <li class="pt-1">
-                            <a href="{{ route('contact') }}" class="text-[#00A8AD] hover:text-[#00A8AD]/80 transition font-medium">Hubungi Kami</a>
-                        </li>
+
+                <div class="lg:col-span-3">
+                    <h4 class="font-mono text-[10px] uppercase tracking-[0.18em] text-white/40 mb-4">Yang kami kerjakan</h4>
+                    <ul class="space-y-2.5 text-[13.5px]">
+                        <li>Aplikasi web &amp; sistem internal</li>
+                        <li>Platform belajar &amp; e-commerce</li>
+                        <li>Integrasi API &amp; otomasi</li>
+                        <li>Jaringan, ISP &amp; IoT</li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <h4 class="font-mono text-[10px] uppercase tracking-[0.18em] text-white/40 mb-4">Kontak</h4>
+                    <ul class="space-y-2.5 text-[13.5px]">
+                        <li><a href="mailto:{{ config('company.email') }}" class="hover:text-white transition-colors">{{ config('company.email') }}</a></li>
+                        <li><a href="{{ config('company.whatsapp_url') }}" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">{{ config('company.phone_display') }}</a></li>
+                        <li><a href="https://instagram.com/seriusman0" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">@seriusman0</a></li>
+                        <li class="text-white/45 pt-1 leading-relaxed">{{ config('company.address.street') }}<br>{{ config('company.address.locality') }}, {{ config('company.address.region') }}</li>
                     </ul>
                 </div>
             </div>
-            <div class="border-t border-white/8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/30">
-                <span>&copy; {{ date('Y') }} Nano Project Dev Indonesia. Hak cipta dilindungi.</span>
-                <span class="font-serif italic">Didirikan oleh Seriusman Waruwu, S.Kom</span>
+
+            <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[12px] text-white/35">
+                <span>&copy; {{ date('Y') }} Nano Project Dev Indonesia. Seluruh hak cipta dilindungi.</span>
+                <span>Didirikan oleh Seriusman Waruwu, S.Kom</span>
             </div>
         </div>
     </footer>

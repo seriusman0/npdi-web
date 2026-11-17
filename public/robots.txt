@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin
+Disallow: /checkout
+Disallow: /payment
+
+Sitemap: https://nanoprojectdevindonesia.com/sitemap.xml

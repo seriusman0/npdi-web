@@ -13,11 +13,15 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
+        $middleware->web(append: [
+            \App\Http\Middleware\TrackPageVisit::class,
+        ]);
         $middleware->redirectGuestsTo(fn (Request $request) =>
             $request->is('admin/*') ? route('admin.login') : route('home')
         );
         $middleware->validateCsrfTokens(except: [
             'payment/webhook/xendit',
+            'webhooks/openwa',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

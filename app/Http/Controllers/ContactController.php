@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactFormMail;
 use App\Models\ContactMessage;
+use App\Support\Telegram;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -54,6 +55,8 @@ class ContactController extends Controller
             \Log::error('ContactForm mail gagal: ' . $e->getMessage());
         }
 
+        $this->notifyTelegram($contactMessage);
+
         // Kirim notifikasi ke WA bot owner via queue file
         try {
             $waText = "📩 *Pesan Baru dari Website!*\n\n"
@@ -69,5 +72,49 @@ class ContactController extends Controller
         }
 
         return redirect()->route('contact')->with('success', 'Pesan Anda berhasil dikirim! Kami akan menghubungi Anda segera.');
+    }
+
+    /**
+     * Notifikasi instan ke Telegram pemilik, lengkap dengan tombol balas.
+     */
+    private function notifyTelegram(ContactMessage $contactMessage): void
+    {
+        try {
+            $phone = preg_replace('/\D+/', '', (string) $contactMessage->phone);
+            if ($phone !== '' && str_starts_with($phone, '0')) {
+                $phone = '62'.substr($phone, 1);
+            }
+
+            $text = "📩 <b>Pesan baru dari website</b>\n\n"
+                .'<b>Nama:</b> '.Telegram::escape($contactMessage->name)."\n"
+                .'<b>Email:</b> '.Telegram::escape($contactMessage->email)."\n"
+                .'<b>Telepon:</b> '.Telegram::escape($contactMessage->phone ?: '-')."\n"
+                .'<b>Subjek:</b> '.Telegram::escape($contactMessage->subject)."\n\n"
+                .Telegram::escape(mb_substr($contactMessage->message, 0, 900));
+
+            $buttons = [[
+                [
+                    'text' => 'Buka di Admin',
+                    'url' => route('admin.messages.show', $contactMessage),
+                ],
+            ]];
+
+            if ($phone !== '') {
+                $buttons[] = [[
+                    'text' => 'Balas via WhatsApp',
+                    'url' => 'https://wa.me/'.$phone.'?text='.rawurlencode('Halo '.$contactMessage->name.', terima kasih sudah menghubungi Nano Project Dev Indonesia.'),
+                ]];
+            }
+
+            $buttons[] = [[
+                'text' => 'Balas via Email',
+                'url' => 'https://mail.google.com/mail/?view=cm&fs=1&to='.rawurlencode($contactMessage->email)
+                    .'&su='.rawurlencode('Re: '.$contactMessage->subject).'&body='.rawurlencode("Halo {$contactMessage->name},\n\n"),
+            ]];
+
+            Telegram::send($text, $buttons);
+        } catch (\Throwable $e) {
+            \Log::error('ContactForm Telegram notify gagal: '.$e->getMessage());
+        }
     }
 }

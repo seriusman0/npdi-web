@@ -42,7 +42,8 @@
 
         <p class="text-xs text-gray-400 mt-6">
             Butuh bantuan? Hubungi kami via
-            <a href="https://wa.me/6285189447121" class="text-brand-teal hover:underline">WhatsApp</a>
+            <a href="{{ config('company.whatsapp_url') }}" class="text-brand-teal hover:underline">WhatsApp</a>
+            atau email <a href="mailto:{{ config('company.support_email') }}" class="text-brand-teal hover:underline">{{ config('company.support_email') }}</a>
             atau kunjungi halaman <a href="{{ route('contact') }}" class="text-brand-teal hover:underline">Kontak</a>.
         </p>
     </div>

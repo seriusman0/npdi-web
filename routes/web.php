@@ -8,14 +8,20 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Webhooks\OpenWaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang-kami', [AboutController::class, 'index'])->name('about');
 Route::get('/layanan', [ServicesController::class, 'index'])->name('services');
+Route::get('/proyek', [ProjectsController::class, 'index'])->name('projects');
 Route::get('/hubungi-kami', [ContactController::class, 'index'])->name('contact');
 Route::post('/hubungi-kami', [ContactController::class, 'store'])->middleware('throttle:5,10')->name('contact.store');
+
+// Webhook gateway WhatsApp (OpenWA) — diverifikasi dengan HMAC, bukan sesi.
+Route::post('/webhooks/openwa', [OpenWaController::class, 'handle'])->name('webhooks.openwa');
 
 // Product Shop
 Route::get('/produk', [ProductController::class, 'index'])->name('products.index');
