@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Mail\ContactFormMail;
 use App\Models\ContactMessage;
 use App\Support\Telegram;
+use App\Support\WaReplyDrafter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class ContactController extends Controller
 {
@@ -55,7 +57,8 @@ class ContactController extends Controller
             \Log::error('ContactForm mail gagal: ' . $e->getMessage());
         }
 
-        $this->notifyTelegram($contactMessage);
+        // Draf AI disusun setelah halaman balasan terkirim ke pengunjung, supaya
+        // formulir tidak terasa lambat menunggu model bahasa.
 
         // Kirim notifikasi ke WA bot owner via queue file
         try {
@@ -71,11 +74,25 @@ class ContactController extends Controller
             \Log::error('ContactForm WA notify gagal: ' . $e->getMessage());
         }
 
+        $contactMessage->forceFill(['reply_token' => Str::random(20)])->save();
+
+        $id = $contactMessage->id;
+
+        defer(function () use ($id) {
+            $message = ContactMessage::find($id);
+
+            if ($message !== null) {
+                $this->notifyTelegram($message);
+            }
+        });
+
         return redirect()->route('contact')->with('success', 'Pesan Anda berhasil dikirim! Kami akan menghubungi Anda segera.');
     }
 
     /**
-     * Notifikasi instan ke Telegram pemilik, lengkap dengan tombol balas.
+     * Notifikasi Telegram pemilik: isi pesan, draf balasan AI, dan tombol
+     * cepat untuk memeriksa pesan di admin, menyalin draf, serta membalas
+     * lewat email atau WhatsApp dengan draf sudah terisi.
      */
     private function notifyTelegram(ContactMessage $contactMessage): void
     {
@@ -85,6 +102,19 @@ class ContactController extends Controller
                 $phone = '62'.substr($phone, 1);
             }
 
+            $draft = app(WaReplyDrafter::class)->draftInquiry(
+                (string) $contactMessage->name,
+                (string) $contactMessage->subject,
+                (string) $contactMessage->message,
+            );
+
+            if ($draft['draft'] !== null) {
+                $contactMessage->forceFill([
+                    'ai_draft' => $draft['draft'],
+                    'ai_model' => $draft['model'],
+                ])->save();
+            }
+
             $text = "📩 <b>Pesan baru dari website</b>\n\n"
                 .'<b>Nama:</b> '.Telegram::escape($contactMessage->name)."\n"
                 .'<b>Email:</b> '.Telegram::escape($contactMessage->email)."\n"
@@ -92,25 +122,41 @@ class ContactController extends Controller
                 .'<b>Subjek:</b> '.Telegram::escape($contactMessage->subject)."\n\n"
                 .Telegram::escape(mb_substr($contactMessage->message, 0, 900));
 
+            if ($contactMessage->ai_draft) {
+                $text .= "\n\n✍️ <b>Draf balasan</b>\n".Telegram::escape($contactMessage->ai_draft)
+                    ."\n\n<i>📋 menyalin draf, ✉️/💬 membuka email atau WhatsApp dengan draf siap sunting.</i>";
+            }
+
+            // Tombol harus memakai APP_URL: saat diminta dari dalam container,
+            // host permintaan bisa berupa host.docker.internal.
+            $base = rtrim((string) config('app.url'), '/');
+
             $buttons = [[
                 [
-                    'text' => 'Buka di Admin',
-                    'url' => route('admin.messages.show', $contactMessage),
+                    'text' => '🔍 Cek di Admin',
+                    'url' => $base.'/admin/messages/'.$contactMessage->id,
                 ],
+            ]];
+
+            if ($contactMessage->ai_draft) {
+                $buttons = array_merge($buttons, Telegram::copyButtons((string) $contactMessage->ai_draft));
+            }
+
+            $body = $contactMessage->ai_draft ?: '';
+
+            $buttons[] = [[
+                'text' => $contactMessage->ai_draft ? '✉️ Balas email (draf terisi)' : '✉️ Balas via Email',
+                'url' => 'https://mail.google.com/mail/?view=cm&fs=1&to='.rawurlencode($contactMessage->email)
+                    .'&su='.rawurlencode('Re: '.$contactMessage->subject)
+                    .'&body='.rawurlencode($body !== '' ? $body : "Halo {$contactMessage->name},\n\n"),
             ]];
 
             if ($phone !== '') {
                 $buttons[] = [[
-                    'text' => 'Balas via WhatsApp',
-                    'url' => 'https://wa.me/'.$phone.'?text='.rawurlencode('Halo '.$contactMessage->name.', terima kasih sudah menghubungi Nano Project Dev Indonesia.'),
+                    'text' => $contactMessage->ai_draft ? '💬 Balas WhatsApp (draf terisi)' : '💬 Balas via WhatsApp',
+                    'url' => 'https://wa.me/'.$phone.'?text='.rawurlencode($body !== '' ? $body : 'Halo '.$contactMessage->name.', terima kasih sudah menghubungi Nano Project Dev Indonesia.'),
                 ]];
             }
-
-            $buttons[] = [[
-                'text' => 'Balas via Email',
-                'url' => 'https://mail.google.com/mail/?view=cm&fs=1&to='.rawurlencode($contactMessage->email)
-                    .'&su='.rawurlencode('Re: '.$contactMessage->subject).'&body='.rawurlencode("Halo {$contactMessage->name},\n\n"),
-            ]];
 
             Telegram::send($text, $buttons);
         } catch (\Throwable $e) {

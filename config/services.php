@@ -38,6 +38,12 @@ return [
         'api_key' => env('OPENWA_API_KEY'),
         'session' => env('OPENWA_SESSION', 'npdi'),
         'webhook_secret' => env('OPENWA_WEBHOOK_SECRET'),
+        'auto_reply_minutes' => (int) env('WA_AUTO_REPLY_MINUTES', 10),
+    ],
+
+    'gemini' => [
+        'key' => env('GEMINI_API_KEY'),
+        'model' => env('GEMINI_MODEL', 'gemini-flash-lite-latest'),
     ],
 
     'slack' => [

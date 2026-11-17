@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Webhooks\OpenWaController;
+use App\Http\Controllers\WaReplyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -22,6 +23,12 @@ Route::post('/hubungi-kami', [ContactController::class, 'store'])->middleware('t
 
 // Webhook gateway WhatsApp (OpenWA) — diverifikasi dengan HMAC, bukan sesi.
 Route::post('/webhooks/openwa', [OpenWaController::class, 'handle'])->name('webhooks.openwa');
+
+// Tujuan tombol draf balasan di Telegram: catat klik, lalu arahkan ke WhatsApp.
+Route::get('/wa/{token}', WaReplyController::class)->middleware('throttle:60,1')->name('wa.reply');
+
+// Tombol "Balas manual": sama, tetapi membuka WhatsApp dengan templat draf terisi.
+Route::get('/m/{token}', [WaReplyController::class, 'manual'])->middleware('throttle:60,1')->name('wa.reply.manual');
 
 // Product Shop
 Route::get('/produk', [ProductController::class, 'index'])->name('products.index');

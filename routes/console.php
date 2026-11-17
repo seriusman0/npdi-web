@@ -13,3 +13,8 @@ Schedule::command('report:daily')
     ->dailyAt('20:00')
     ->timezone('Asia/Jakarta')
     ->withoutOverlapping();
+
+// Balasan WhatsApp otomatis untuk pesan yang tidak ditanggapi.
+Schedule::command('wa:auto-reply')
+    ->everyMinute()
+    ->withoutOverlapping();

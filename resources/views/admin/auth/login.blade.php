@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/icon/favicon-32x32.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('mazer/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/compiled/css/app-dark.css') }}">
+    <link rel="stylesheet" href="{{ asset('mazer/compiled/css/auth.css') }}">
     <link rel="stylesheet" href="{{ asset('mazer/extensions/bootstrap-icons/font/bootstrap-icons.css') }}">
 </head>
 <body>
@@ -23,7 +24,7 @@
                         </a>
                     </div>
 
-                    <h1 class="auth-title">Log in</h1>
+                    <h1 class="auth-title">Masuk</h1>
                     <p class="auth-subtitle mb-5">Masuk ke panel admin NPDI.</p>
 
                     @if ($errors->any())
@@ -78,7 +79,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-3 w-100">
-                            Log in
+                            Masuk ke panel
                         </button>
                     </form>
                 </div>
